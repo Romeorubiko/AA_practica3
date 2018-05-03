@@ -1,10 +1,10 @@
 package ch.idsia.agents.controllers;
 
 public class Instancia {
-	int nearestCreature;
-	int nearestCoin;
-	int saltoSeguido;
-	boolean marioOnGorund;
+	int nearestCreature, creature24;
+	int nearestCoin, coin24;
+	int saltoSeguido, salto24;
+	boolean marioOnGorund, ground24;
 	int merge9_10, merge9_11, merge9_12;
 	int merge8_10, merge8_11, merge8_12;
 	int merge7_10, merge7_11, merge7_12;

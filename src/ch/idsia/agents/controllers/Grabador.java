@@ -23,6 +23,11 @@ public class Grabador {
 	static Queue<Integer> hace24reward = new LinkedList<Integer>();
 	static Queue<Integer> hace24distance = new LinkedList<Integer>();
 	static Queue<Integer> hace24mode = new LinkedList<Integer>();
+	static Queue<Integer> hace24coin = new LinkedList<Integer>();
+	static Queue<Integer> hace24creature = new LinkedList<Integer>();
+	static Queue<Integer> hace24salto = new LinkedList<Integer>();
+	static Queue<Integer> hace24evaluacion = new LinkedList<Integer>();
+	static Queue<Boolean> hace24ground = new LinkedList<Boolean>();
 	static Queue<boolean[]> action24 = new LinkedList<boolean[]>();
 	static Queue<byte[][]> hace24merge = new LinkedList<byte[][]>();
 	
@@ -33,10 +38,17 @@ public class Grabador {
 		hace24distance.add(e.getEvaluationInfo().distancePassedCells);
 		action24.add(action.clone());
 		hace24merge.add(e.getMergedObservationZZ(detalle, detalle));
-		if(ticks < 24) {
-			ticks++;
-			}
-		else {
+		hace24coin.add(nearestCoin(hace24merge.peek()));
+		hace24creature.add(nearestCreature(hace24merge.peek()));
+		hace24salto.add(saltoSeguido);
+		if (((byte[][])hace24merge.peek())[10][9]!=0){
+			hace24ground.add(true);
+		}
+		else{
+			hace24ground.add(false);
+		}
+
+		if(ticks > 23) {
 			Instancia ins = new Instancia();
 			action = action24.poll();
 			Queue tempList = new LinkedList<>(hace24reward);
@@ -44,11 +56,7 @@ public class Grabador {
 			PrintWriter pw = new PrintWriter(fichero);
 			
 			byte[][] temp = hace24merge.poll();
-			for (int i = 5; i < 10; i++) {
-				for (int j = 10; j < 13; j++) {
-					pw.print(temp[i][j]+",");
-				}
-			}
+			pw.print(temp[9][10]+",");//merge n
 			
 			pw.print(hace24reward.peek()+",");
 			ins.reward = hace24reward.peek();
@@ -69,58 +77,68 @@ public class Grabador {
 				pw.print("false,");
 			}
 			
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.reward6 = (int)tempList.poll();
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.reward12 = (int)tempList.poll();
-			for (int i = 0; i < 11; i++) tempList.poll();
+			pw.print(Funcion.evaluacion(ins)+",");
+			
+			pw.print(e.getMarioMode()+",");
+
+			for (int i = 0; i < 23; i++) tempList.poll();
 			pw.print(tempList.peek()+",");
 			ins.reward24 = (int)tempList.poll();
 			hace24reward.poll();
 			
+			tempList = new LinkedList<>(hace24coin);
+			for (int i = 0; i < 23; i++) tempList.poll();
+			pw.print(tempList.peek()+",");
+			ins.coin24 = (int)tempList.poll();
+			hace24coin.poll();
+			
+			tempList = new LinkedList<>(hace24creature);
+			for (int i = 0; i < 23; i++) tempList.poll();
+			pw.print(tempList.peek()+",");
+			ins.creature24 = (int)tempList.poll();
+			hace24creature.poll();
+			
 			tempList = new LinkedList<>(hace24distance);
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.distance6 = (int)tempList.poll();
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.distance12 = (int)tempList.poll();
-			for (int i = 0; i < 11; i++) tempList.poll();
+			for (int i = 0; i < 23; i++) tempList.poll();
 			pw.print(tempList.peek()+",");
 			ins.distance24 = (int)tempList.poll();
 			hace24distance.poll();
 			
+			tempList = new LinkedList<>(hace24salto);
+			for (int i = 0; i < 23; i++) tempList.poll();
+			pw.print(tempList.peek()+",");
+			ins.salto24 = (int)tempList.poll();
+			hace24salto.poll();
+			
+			tempList = new LinkedList<>(hace24ground);
+			for (int i = 0; i < 23; i++) tempList.poll();
+			pw.print(tempList.peek()+",");
+			ins.ground24 = (boolean)tempList.poll();
+			hace24ground.poll();
+			
 			tempList = new LinkedList<>(hace24mode);
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.mode6 = (int)tempList.poll();
-			for (int i = 0; i < 5; i++) tempList.poll();
-			pw.print(tempList.peek()+",");
-			ins.mode12 = (int)tempList.poll();
-			for (int i = 0; i < 11; i++) tempList.poll();
+			for (int i = 0; i < 23; i++) tempList.poll();
 			pw.print(tempList.peek()+",");
 			ins.mode24 = (int)tempList.poll();
 			hace24mode.poll();
 
-			pw.print(e.getMarioMode()+",");
-			
-			pw.print(Funcion.evaluacion(ins)+",");	
+			Queue tempMerge = new LinkedList<>(hace24merge);
+			for (int i = 0; i < 22; i++) tempMerge.poll();
+			temp = hace24merge.poll();
+			pw.print(temp[9][10]+",");//merge n+24
 			
 			pw.print(action[Mario.KEY_DOWN]+",");
 			pw.print(action[Mario.KEY_JUMP]+",");
 			pw.print(action[Mario.KEY_LEFT]+",");
 			pw.print(action[Mario.KEY_RIGHT]+",");
 			pw.print(action[Mario.KEY_SPEED]+",");
-			pw.print(action[Mario.KEY_UP]);
-			
-			
-			if(action[Mario.KEY_JUMP])saltoSeguido++;
-			else saltoSeguido=0;
+			pw.print(action[Mario.KEY_UP]);	
 			pw.println();
-			ticks ++; 
 		}
+		
+		if(action[Mario.KEY_JUMP])saltoSeguido++;
+		else saltoSeguido=0;
+		ticks ++; 
 		
 	}
 	
@@ -211,28 +229,26 @@ public class Grabador {
 		pw.println("@relation " + id);
 		pw.println();
 		
-		for (int i = 5; i < 10; i++) {
-			for (int j =10; j < 13; j++) {
-				pw.println("@attribute mergeObsZZ_"+i+"_"+j+" {-85,-24,-60,-62,0,2,3,25,80,93}");
-			}
-		}
+
+		pw.println("@attribute mergeObsZZ_9_10 {-85,-24,-60,-62,0,2,3,25,80,93}");
 		pw.println("@attribute intermediateReward numeric");
 		pw.println("@attribute nearestCoin numeric");
 		pw.println("@attribute nearestCreature numeric");
 		pw.println("@attribute distancePassedCells numeric");
 		pw.println("@attribute saltoSeguido numeric");
 		pw.println("@attribute marioOnGround {true,false}");
-		pw.println("@attribute reward6 numeric");
-		pw.println("@attribute reward12 numeric");
-		pw.println("@attribute reward24 numeric");
-		pw.println("@attribute distance6 numeric");
-		pw.println("@attribute distance12 numeric");
-		pw.println("@attribute distance24 numeric");
-		pw.println("@attribute mode6 numeric");
-		pw.println("@attribute mode12 numeric");
-		pw.println("@attribute mode24 numeric");
-		pw.println("@attribute marioMode numeric");
 		pw.println("@attribute evaluacion numeric");
+		pw.println("@attribute marioMode numeric");
+		
+		pw.println("@attribute reward24 numeric");
+		pw.println("@attribute coin24 numeric");
+		pw.println("@attribute creature24 numeric");
+		pw.println("@attribute distance24 numeric");
+		pw.println("@attribute salto24 numeric");
+		pw.println("@attribute ground24 {true,false}");
+		pw.println("@attribute mode24 numeric");
+		pw.println("@attribute merge24ObsZZ_9_10 {-85,-24,-60,-62,0,2,3,25,80,93}");
+
 		pw.println("@attribute DOWN {true,false}");
 		pw.println("@attribute JUMP {true,false}");
 		pw.println("@attribute LEFT {true,false}");
