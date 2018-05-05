@@ -107,10 +107,10 @@ public class P2BotAgent extends BasicMarioAIAgent implements Agent {
          int nearest = Grabador.nearestCreature(mergeObsr);
         if(mergeObsr != null) {
         	if (nearest<4) {
-				if(precaucion > 4){
+				if(precaucion > 3){
 					precaucion = 0;
 					action[Mario.KEY_RIGHT] = false;
-       				//action[Mario.KEY_LEFT] = true;
+       				action[Mario.KEY_LEFT] = true;
 				}
 				else if(action[Mario.KEY_RIGHT]) {
 					//action[Mario.KEY_SPEED] = true;
