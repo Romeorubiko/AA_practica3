@@ -124,7 +124,7 @@ public class Grabador {
 
 			Queue tempMerge = new LinkedList<>(hace24merge);
 			for (int i = 0; i < 22; i++) tempMerge.poll();
-			temp = hace24merge.poll();
+			temp = (byte[][])tempMerge.poll();
 			pw.print(temp[9][10]+",");//merge n+24
 			
 			pw.print(action[Mario.KEY_DOWN]+",");
