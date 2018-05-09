@@ -25,6 +25,7 @@ public class Funcion {
 		float SituacionB;
 		float SituacionC;
 		float SituacionD;
+		
 	//Pesos asignados a cada atributo
 		float P1 = 3;
 		float P2 = 3;
