@@ -14,26 +14,39 @@ import ch.idsia.benchmark.mario.environments.MarioEnvironment;
 import java.util.LinkedList;
 
 
-public class Manuel extends BasicMarioAIAgent implements Agent {
+public class Manus extends BasicMarioAIAgent implements Agent {
 	
 	int tick;
 	int salto = 0;
     private byte[][] mergeObsr = null;
 	private Funcion funcion;
 	Instancia ins = new Instancia();
+    private FileWriter fichero;
+    private String path = "Manus.arff";
 	
 	List<Tupla> mapa  = new ArrayList<Tupla>();
-	
-	//COGER EL LINKEDLIST INSTANCIAS DE FUNCION E IMPORTARLO AQUI
 	LinkedList<Instancia> instancias;
 	
-    public Manuel() throws IOException{
-	    super("Manuel");
+    public Manus() throws IOException{
+	    super("Manus");
+	    fichero = new FileWriter(path, true);
+        BufferedReader br = new BufferedReader(new FileReader(path));     
+		if (br.readLine() == null) {
+			
+			Grabador.cabeceraWeka(fichero ,"Frampt");
+	    		System.out.println("No errors, and file empty");
+		}
+		else{
+			br.close();
+			Grabador.borrarUltimaLinea(path);
+			PrintWriter pw = new PrintWriter(fichero);
+			pw.println();
+		}
 	    tick = 0;
 	    
 		funcion = new Funcion();
 		funcion.indexar("input.arff");
-		
+		instancias = funcion.instancias;
 		/*
 		public static final int DERECHA=0;
 		public static final int IZQUIERDA=1;
