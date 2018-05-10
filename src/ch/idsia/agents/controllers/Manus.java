@@ -33,7 +33,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
         BufferedReader br = new BufferedReader(new FileReader(path));     
 		if (br.readLine() == null) {
 			
-			Grabador.cabeceraWeka(fichero ,"Frampt");
+			Grabador.cabeceraWeka(fichero ,"Manus");
 	    		System.out.println("No errors, and file empty");
 		}
 		else{
@@ -54,11 +54,9 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 		public static final int SALTARDERECHA=3;
 		public static final int SALTARIZQUIERDA=4;
 		*/
-		
-		funcion = new Funcion();
+
         Instancia ins = new Instancia();
-        
-		funcion.indexar("tuplas.arff");
+
         
 		//Acciones y estados elegidos. 0 = Monstruo cerca; 1 = moneda cerca; 2= Hay un obstaculo que saltar; 3 = No hay nada;
 		
