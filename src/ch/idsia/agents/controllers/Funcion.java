@@ -118,9 +118,9 @@ public class Funcion {
 		int P5 = 10;
 		int P6 = 20;
 		
-		return (P1 * (ins.reward12-ins.reward) + P2 * (ins.reward24-ins.reward)) 
-				+ (P3 * (ins.distance12-ins.distance) + P4 * (ins.distance24-ins.distance))
-				+ (P5 * (ins.mode12 - ins.marioMode) + P6 * (ins.mode24 - ins.marioMode));
+		return (P2 * (ins.reward24-ins.reward)) 
+				+ (P4 * (ins.distance24-ins.distance))
+				+ (P6 * (ins.mode24 - ins.marioMode));
 
 	}
 	
