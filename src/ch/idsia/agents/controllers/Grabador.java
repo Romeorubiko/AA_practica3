@@ -77,9 +77,8 @@ public class Grabador {
 				pw.print("false,");
 			}
 			
-			pw.print(Funcion.evaluacion(ins)+",");
-			
 			pw.print(e.getMarioMode()+",");
+			ins.marioMode = e.getMarioMode();
 
 			for (int i = 0; i < 23; i++) tempList.poll();
 			pw.print(tempList.peek()+",");
@@ -126,6 +125,8 @@ public class Grabador {
 			for (int i = 0; i < 22; i++) tempMerge.poll();
 			temp = (byte[][])tempMerge.poll();
 			pw.print(temp[9][10]+",");//merge n+24
+
+			pw.print(Funcion.evaluacion(ins)+",");
 			
 			pw.print(action[Mario.KEY_DOWN]+",");
 			pw.print(action[Mario.KEY_JUMP]+",");
@@ -237,7 +238,6 @@ public class Grabador {
 		pw.println("@attribute distancePassedCells numeric");
 		pw.println("@attribute saltoSeguido numeric");
 		pw.println("@attribute marioOnGround {true,false}");
-		pw.println("@attribute evaluacion numeric");
 		pw.println("@attribute marioMode numeric");
 		
 		pw.println("@attribute reward24 numeric");
@@ -248,6 +248,7 @@ public class Grabador {
 		pw.println("@attribute ground24 {true,false}");
 		pw.println("@attribute mode24 numeric");
 		pw.println("@attribute merge24ObsZZ_9_10 {-85,-24,-60,-62,0,2,3,25,80,93}");
+		pw.println("@attribute evaluacion numeric");
 
 		pw.println("@attribute DOWN {true,false}");
 		pw.println("@attribute JUMP {true,false}");

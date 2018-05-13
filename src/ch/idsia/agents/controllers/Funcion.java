@@ -117,7 +117,6 @@ public class Funcion {
 		int P4 = 30;
 		int P5 = 10;
 		int P6 = 20;
-		
 		return (P2 * (ins.reward24-ins.reward)) 
 				+ (P4 * (ins.distance24-ins.distance))
 				+ (P6 * (ins.mode24 - ins.marioMode));
@@ -170,34 +169,34 @@ public class Funcion {
 						ins.marioOnGorund = Boolean.parseBoolean(valor);
 						break;
 					case 8:
-						ins.evaluacion = Integer.parseInt(valor);
-						break;
-					case 9:
 						ins.marioMode = Integer.parseInt(valor);
 						break;
-					case 10:
+					case 9:
 						ins.reward24 = Integer.parseInt(valor);
 						break;
-					case 11:
+					case 10:
 						ins.coin24 = Integer.parseInt(valor);
 						break;
-					case 12:
+					case 11:
 						ins.creature24 = Integer.parseInt(valor);
 						break;
-					case 13:
+					case 12:
 						ins.distance24 = Integer.parseInt(valor);
 						break;
-					case 14:
+					case 13:
 						ins.salto24 = Integer.parseInt(valor);
 						break;
-					case 15:
+					case 14:
 						ins.ground24 = Boolean.parseBoolean(valor);
 						break;
-					case 16:
+					case 15:
 						ins.mode24 = Integer.parseInt(valor);
 						break;
-					case 17:
+					case 16:
 						ins.merge24OBS9_10 = Integer.parseInt(valor);
+						break;
+					case 17:
+						ins.evaluacion = Integer.parseInt(valor);
 						break;
 					case 18:
 						ins.down = Boolean.parseBoolean(valor);
