@@ -23,7 +23,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 	Instancia ins = new Instancia();
     private FileWriter fichero;
     private String path = "Manus.arff";
-    String[] acciones = {"0", "1", "2", "3", "4"};
+    String[] acciones = {"0", "1", "2", "3"};
     String[] estados  = {"0", "1", "2", "3"};
     QLearning ql  = new QLearning(0, 1, 0.3, estados, acciones, 4, 5);
 	List<Tupla> mapa  = new ArrayList<Tupla>();
@@ -146,9 +146,9 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 
     public boolean[] getAction() {
 
-		action[Mario.KEY_DOWN] = false;
+	action[Mario.KEY_DOWN] = false;
         action[Mario.KEY_UP] = false;
-        action[Mario.KEY_RIGHT] = true;
+        action[Mario.KEY_RIGHT] = false;
         action[Mario.KEY_LEFT] = false;
         action[Mario.KEY_SPEED] = false;
         action[Mario.KEY_JUMP] = false;
@@ -170,6 +170,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 	   //BUSCAMOS EN LA TABLA Q LA SITUACION OBTENIDA Y HACEMOS LA ACCION CON MAS REFUERZO
 	   double[] resultado = ql._tablaQ[funcion.pertenencia(ins, false)];
 	   int m_pos = 0;
+		
 	   for (int i = 1; i < resultado.length; i++)
 		   if(resultado[m_pos]<resultado[i])m_pos =i;
 
@@ -194,25 +195,6 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 				break;
 	
 		}
-	   /* DEVOLVEMOS LA ACCION OBTENIDA
-	   //Desplazarse a la derecha
-    	if(ins.right && !ins.jump) return 0;
-    	//Salto a la derecha
-    	if(ins.right && ins.jump) return 3;
-    	//Salto en el sitio
-		if(!ins.right && !ins.left && ins.jump) return 2;
-		//Desplazarse a la izquierda
-		if(!ins.right && ins.left && !ins.jump) return 1;
-		//Salto a la izquierda
-		if(!ins.right && ins.left && ins.jump) return 4; 
-		
-	   action[Mario.KEY_DOWN] = resultado.down;
-       action[Mario.KEY_UP] = resultado.up;
-       action[Mario.KEY_RIGHT] = resultado.right;
-       action[Mario.KEY_LEFT] = resultado.left;
-       action[Mario.KEY_SPEED] = resultado.speed;
-       action[Mario.KEY_JUMP] = resultado.jump;
-       */
        return action;
     
     }
