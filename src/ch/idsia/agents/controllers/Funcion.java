@@ -27,8 +27,8 @@ public class Funcion {
 		float SituacionD;
 		
 	//Pesos asignados a cada atributo
-		float P1 = 3;
-		float P2 = 3;
+		float P1 = (float)3;
+		float P2 = (float)3;
 		float P3 = 30;
 		
 		int creature = ins.nearestCreature;
@@ -75,7 +75,8 @@ public class Funcion {
 		merge3 = 0;
 		nearestCreature = Math.abs(creature-11) * P1;
 		nearestCoin = Math.abs(coin-11) * P2;
-		if(merge != -24 | merge != -60 | merge != -85) merge3 += 1;
+		if(merge != -24 && merge != -60 && merge != -85 && merge != -62) merge3 += 1;
+		
 		merge3 *= P3;
 
 
@@ -88,19 +89,19 @@ public class Funcion {
 		merge3 = 1;
 		nearestCreature = Math.abs(creature-11) * P1;
 		nearestCoin = Math.abs(coin-11) * P2;
-		if(merge == -85 || merge == -24) merge3 -= 1;
+		if(merge == 0) merge3 -= 1;
 		merge3 *= P3;
 
 
 		SituacionD = nearestCreature + nearestCoin + merge3;	
-
+		//System.out.println("A:"+SituacionA+",B:"+SituacionB+",C:"+SituacionC+",D:"+SituacionD);
 		//Una vez calculadas todas las situaciones, devolvemos la posiciÃ³n de la mayor
 		
-		if(SituacionA > SituacionB && SituacionA > SituacionC && SituacionA > SituacionD)
+		if(SituacionA < SituacionB && SituacionA < SituacionC && SituacionA < SituacionD)
 			return 0;
-		if(SituacionB > SituacionC && SituacionB > SituacionA && SituacionB > SituacionD)
+		if(SituacionB < SituacionC && SituacionB < SituacionA && SituacionB < SituacionD)
 			return 1;
-		if(SituacionC > SituacionB && SituacionC > SituacionA && SituacionC > SituacionD)
+		if(SituacionC < SituacionB && SituacionC < SituacionA && SituacionC < SituacionD)
 			return 2;
 		else
 			return 3;
@@ -111,11 +112,11 @@ public class Funcion {
 	 */
 	static public int evaluacion(Instancia ins) {//todo
 	//Pesos asignados a cada atributo	
-		int P1 = 5;
+		//int P1 = 5;
 		int P2 = 15;
-		int P3 = 20;
+		//int P3 = 20;
 		int P4 = 30;
-		int P5 = 10;
+		//int P5 = 10;
 		int P6 = 20;
 		return (P2 * (ins.reward24-ins.reward)) 
 				+ (P4 * (ins.distance24-ins.distance))

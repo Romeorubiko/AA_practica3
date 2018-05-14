@@ -25,7 +25,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
     private String path = "Manus.arff";
     String[] acciones = {"0", "1", "2", "3"};
     String[] estados  = {"0", "1", "2", "3"};
-    QLearning ql  = new QLearning(0, 1, 0.3, estados, acciones, 4, 5);
+    QLearning ql  = new QLearning(0, 0.25, 0.5, estados, acciones, 4, 4);
 	List<Tupla> mapa  = new ArrayList<Tupla>();
 	LinkedList<Instancia> instancias;
 	
@@ -72,7 +72,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
         boolean encontrado;
         
         
-        int ciclosMaximos   = 9;
+        int ciclosMaximos   = 8;
         int ciclos          = 0;
         int posicion;
 		
@@ -92,7 +92,8 @@ public class Manus extends BasicMarioAIAgent implements Agent {
         {
             for (int i = 0; i < mapa.size(); i++)
                 ql.actualizarTablaQ(mapa.get(i));
-            
+		if(ql._alpha >0.10)ql._alpha -= 0.04;
+		//if(ql._gamma <0.9)ql._gamma += 0.04;
             ciclos++;
         }
         
@@ -104,16 +105,14 @@ public class Manus extends BasicMarioAIAgent implements Agent {
     	//Desplazarse a la derecha
     	if(ins.right && !ins.jump) return 0;
     	//Salto a la derecha
-    	if(ins.right && ins.jump) return 3;
+    	else if(ins.right && ins.jump) return 3;
     	//Salto en el sitio
-		if(!ins.right && !ins.left && ins.jump) return 2;
-		//Desplazarse a la izquierda
-		if(!ins.right && ins.left && !ins.jump) return 1;
-		//Salto a la izquierda
-		if(!ins.right && ins.left && ins.jump) return 4; 
-		else{
-			return 3;
-		}
+	else if(!ins.right && !ins.left && ins.jump) return 2;
+	//Desplazarse a la izquierda
+	else if(ins.left && !ins.jump) return 1;
+	else{
+		return 0;
+	}
     }
 
     public void reset() {
@@ -171,9 +170,11 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 	   double[] resultado = ql._tablaQ[funcion.pertenencia(ins, false)];
 	   int m_pos = 0;
 		
+		
 	   for (int i = 1; i < resultado.length; i++)
 		   if(resultado[m_pos]<resultado[i])m_pos =i;
-
+	if(funcion.pertenencia(ins, false) == 2 && Math.random()*10<8)m_pos =3;
+	if(tick%24==0)System.out.println("Situ: "+funcion.pertenencia(ins, false)+";acc: "+m_pos);
 	   switch (m_pos) {
 			case 0:
 				action[Mario.KEY_RIGHT] = true;
@@ -195,6 +196,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 				break;
 	
 		}
+	
        return action;
     
     }
