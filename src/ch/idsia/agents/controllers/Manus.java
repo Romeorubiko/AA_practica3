@@ -76,12 +76,12 @@ public class Manus extends BasicMarioAIAgent implements Agent {
         int ciclos          = 0;
         int posicion;
 		
-        //Recorremos el array añadiendo en el mapa las tuplas. Usamos el LinkedList instancias el cual todavia no esta declarado
+        //Recorremos el array aÃ±adiendo en el mapa las tuplas. Usamos el LinkedList instancias el cual todavia no esta declarado
         for(int i=0; i <instancias.size(); i++) {
         	ins = instancias.get(i);
         	estadoInicial = ins.situacion;
             estadoFinal = ins.situacion24;
-            //Creamos una nueva función que nos determine la accion tomada
+            //Creamos una nueva funciÃ³n que nos determine la accion tomada
             accion = determinarAccion(ins);
             refuerzo = ins.evaluacion;      			
         	mapa.add(new Tupla(estadoInicial, accion, estadoFinal, refuerzo));  
@@ -174,7 +174,7 @@ public class Manus extends BasicMarioAIAgent implements Agent {
 	   for (int i = 1; i < resultado.length; i++)
 		   if(resultado[m_pos]<resultado[i])m_pos =i;
 	if(funcion.pertenencia(ins, false) == 2 && Math.random()*10<8)m_pos =3;
-	if(tick%24==0)System.out.println("Situ: "+funcion.pertenencia(ins, false)+";acc: "+m_pos);
+	//if(tick%24==0)System.out.println("Situ: "+funcion.pertenencia(ins, false)+";acc: "+m_pos);
 	   switch (m_pos) {
 			case 0:
 				action[Mario.KEY_RIGHT] = true;
